@@ -32,7 +32,7 @@ function App() {
   }
   return (
     <>
-    <Router>
+    <Router basename="/">
       <Navbar title="Textiser" mode={mode} toggleMode={toggleMode}/>
       <Alert alert={alert}/>
       <div className="container my-3">

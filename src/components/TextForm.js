@@ -3,37 +3,32 @@ import React,{useState} from "react";
 export default function TextForm(props) {
   const handleUpClick=()=>{
     setText(text.toUpperCase());
-    props.showALert("Converted to upper case","success");
+    props.showAlert("Converted to upper case","success");
   }
   const handleLowClick=()=>{
     setText(text.toLowerCase());
-    props.showALert("Converted to lower case","success");
+    props.showAlert("Converted to lower case","success");
   }
   const handleClearClick=()=>{
     setText('');
-    props.showALert("Text has been cleared","success");
+    props.showAlert("Text has been cleared","success");
   }
   const handleCopyClick=()=>{
-    let textEntered = document.getElementById('myBox');
-    textEntered.select();
-    navigator.clipboard.writeText(textEntered.value);
-    props.showALert("Copied to clipboard","success");
+    navigator.clipboard.writeText(text);
+    props.showAlert("Copied to clipboard","success");
   }
   const handleSpacesClick=()=>{
     // This is a reg ex expression that is used to check for one and more spaces between words and then we join
     // new array with single spaces which ulitmately removes all the extra spaces.
     let newText = text.split(/[ ]+/); 
     setText(newText.join(" "));
-    props.showALert("Removed extra spaces","success");
+    props.showAlert("Removed extra spaces","success");
   }
   const handleOnChange = (event)=>{
     setText(event.target.value);
   }
     const[text,setText] = useState("");
-    let words = 0;
-    if(text.trim()!==""){
-      words = text.split(" ").length;
-    }
+    let words = text.split(/\s+/).filter((element)=>{return element.length!==0}).length; 
     const characters = text.length;
     const readTime = 0.008 * words;
   return (
@@ -55,11 +50,11 @@ export default function TextForm(props) {
           placeholder="Enter your text here"
         ></textarea>
       </div>
-      <button className="btn btn-primary mx-2" onClick={handleUpClick}>Convert To UpperCase</button>
-      <button className="btn btn-primary mx-2" onClick={handleLowClick}>Convert To LowerCase</button>
-      <button className="btn btn-primary mx-2" onClick={handleClearClick}>Clear Text</button>
-      <button className="btn btn-primary mx-2" onClick={handleCopyClick}>Copy To Clipboard</button>
-      <button className="btn btn-primary mx-2" onClick={handleSpacesClick}>Remove Extra Spaces</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-2" onClick={handleUpClick}>Convert To UpperCase</button>
+      <button disabled={text.length===0}  className="btn btn-primary mx-2" onClick={handleLowClick}>Convert To LowerCase</button>
+      <button disabled={text.length===0}  className="btn btn-primary mx-2" onClick={handleClearClick}>Clear Text</button>
+      <button disabled={text.length===0}  className="btn btn-primary mx-2" onClick={handleCopyClick}>Copy To Clipboard</button>
+      <button disabled={text.length===0}  className="btn btn-primary mx-2" onClick={handleSpacesClick}>Remove Extra Spaces</button>
     </div>
     <div className="container my-4" style={
       {
